@@ -44,9 +44,11 @@ jobs:
           key: ${{ runner.os }}-pip-${{ steps.set_variables.outputs.PY }}
       - name: Install Current PDM
         run: |
+          export LD_PRELOAD=/lib/x86_64-linux-gnu
           python -m pip install -U .
       - name: Install Dev Dependencies
         run: |
+          export LD_PRELOAD=/lib/x86_64-linux-gnu
           pdm config parallel_install true
           pdm install -dvv
       - name: Run Tests
