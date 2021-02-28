@@ -24,7 +24,7 @@ jobs:
         id: set_variables
         run: |
           sudo apt-get update
-          sudo apt-get install libc6-dev:i386 libx11-dev:i386 libxext-dev:i386 lib32gcc-7-dev
+          # sudo apt-get install libc6-dev:i386 libx11-dev:i386 libxext-dev:i386 lib32gcc-7-dev
           sudo apt install gcc-multilib
           echo "::set-output name=PY::$(python -c 'import hashlib, sys;print(hashlib.sha256(sys.version.encode()+sys.executable.encode()).hexdigest())')"
           echo "::set-output name=PIP_CACHE::$(pip cache dir)"
