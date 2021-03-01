@@ -28,8 +28,8 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           architecture: ${{ matrix.arch }}
-       # env:
-       #   LD_LIBRARY_PATH: "/lib/x86_64-linux-gnu"
+        #env:
+        #  LD_LIBRARY_PATH: "/lib/x86_64-linux-gnu"
       - name: Set Variables
         id: set_variables
         run: |
@@ -46,6 +46,7 @@ jobs:
           python -m pip install -U .
       - name: Install Dev Dependencies
         run: |
+          export LD_PRELOAD=/lib/x86_64-linux-gnu/libgcc_s.so.1
           pdm config parallel_install true
           pdm install -dvv
       - name: Run Tests
