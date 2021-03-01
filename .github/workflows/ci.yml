@@ -1,20 +1,6 @@
 name: Tests
 
-on:
-  pull_request:
-    paths-ignore:
-      - "docs/**"
-      - "news/**"
-      - "*.md"
-      - Dockerfile
-  push:
-    branches:
-      - master
-    paths-ignore:
-      - "docs/**"
-      - "news/**"
-      - "*.md"
-      - Dockerfile
+on: [push]
 
 jobs:
   Testing:
@@ -22,12 +8,8 @@ jobs:
     strategy:
       matrix:
         python-version: [3.7, 3.8, 3.9]
-        os: [ubuntu-latest, macOS-latest, windows-latest]
+        os: [ubuntu-18.04]
         arch: [x64]
-        include:
-          - python-version: 3.8
-            os: windows-latest
-            arch: x86
 
     steps:
       - uses: actions/checkout@v2
