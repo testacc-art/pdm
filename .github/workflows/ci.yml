@@ -9,21 +9,21 @@ jobs:
       fail-fast: false 
       matrix:
         python-version: [3.7, 3.8, 3.9]
-        os: [ubuntu-20.04]
+        os: [ubuntu-20.04, macos-latest]
         arch: [x64]
 
     steps:
       - uses: actions/checkout@v2
         with:
           lfs: true
-      - name: Install additional packages
-        run: |
-          ls /lib/x86_64-linux-gnu
-          #sudo apt-get update
-          #sudo apt-get install gcc-multilib
-          # sudo apt install lib32gcc1
-          #echo "ls /lib/x86_64-linux-gnu"
-          #ls /lib/x86_64-linux-gnu
+#       - name: Install additional packages
+#         run: |
+#           ls /lib/x86_64-linux-gnu
+#           #sudo apt-get update
+#           #sudo apt-get install gcc-multilib
+#           # sudo apt install lib32gcc1
+#           #echo "ls /lib/x86_64-linux-gnu"
+#           #ls /lib/x86_64-linux-gnu
 #       - name: search file system
 #         run: find / -type f -name "libgcc_s.so.1"
       - name: Set up Python ${{ matrix.python-version }}
@@ -47,8 +47,12 @@ jobs:
         run: |
           python -m pip install -U .
       - name: Install Dev Dependencies
+        shell: pwsh
         run: |
-          export LD_PRELOAD=/lib/x86_64-linux-gnu/libgcc_s.so.1
+          if ($IsLinux) {
+            $env:LD_PRELOAD=/lib/x86_64-linux-gnu/libgcc_s.so.1
+          }
+          
           pdm config parallel_install true
           pdm install -dvv
       - name: Run Tests
