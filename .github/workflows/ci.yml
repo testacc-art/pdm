@@ -42,7 +42,6 @@ jobs:
           key: ${{ runner.os }}-pip-${{ steps.set_variables.outputs.PY }}
       - name: Install Current PDM
         run: |
-          export LD_PRELOAD=/lib/x86_64-linux-gnu/libgcc_s.so.1
           python -m pip install -U .
       - name: Install Dev Dependencies
         run: |
